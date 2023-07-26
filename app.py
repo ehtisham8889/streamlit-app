@@ -10,8 +10,18 @@ from torchvision.models.densenet import densenet201
 
 # Find the correct key for the model in the checkpoint dictionary
 # Once you identify the correct key name, replace 'model_key' with that name
-checkpoint = torch.load('C:/Users/Ehtisham/Downloads/epochcheckpoint9.pth', map_location=torch.device('cpu'))
 
+import requests
+
+model_url = 'https://drive.google.com/file/d/1-XPxv9g1D-k9J_Qb7HJ7mWrln6Q-vfmi/view?usp=sharing'  
+output_file = 'epochcheckpoint9.pth'
+
+response = requests.get(model_url)
+with open(output_file, 'wb') as f:
+    f.write(response.content)
+
+checkpoint_path = 'epochcheckpoint9.pth'
+checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))
 
 # Create an instance of the Densenet-201 model
 model = densenet201(pretrained=False, num_classes=39)  # Set the number of output classes to 39
